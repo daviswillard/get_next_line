@@ -1,6 +1,6 @@
 #include "get_next_line.h"
 
-#define BUFFER_SIZE 1
+//#define BUFFER_SIZE 1
 
 static int buffer_works(char **line, char **tail, char *buf)
 {

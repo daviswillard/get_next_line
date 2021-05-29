@@ -16,9 +16,8 @@ int main(void)
 		printf("Call: %d\nLine: %s\n", k, line);
 		free(line);
 	}
+	printf("Call: %d\nLine: %s\n", ++k,line);
 	free(line);
 	close(fd);
-	while (1)
-		NULL;
 	return 0;
 }
