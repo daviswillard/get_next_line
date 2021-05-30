@@ -1,6 +1,7 @@
 #include "get_next_line.h"
 
-#define BUFFER_SIZE 10000
+
+//#define BUFFER_SIZE 10000
 
 static int	buffer_works(char **line, char **tail, char *buf)
 {

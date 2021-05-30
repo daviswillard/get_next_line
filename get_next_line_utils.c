@@ -30,7 +30,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*dup_ret;
 	char	*ret;
 
-	ret = malloc(sizeof(ret) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
+	ret = malloc(sizeof(*ret) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
 	if (ret == NULL)
 		return (NULL);
 	dup_ret = ret;
@@ -63,7 +63,7 @@ char	*ft_strdup(const char *s1)
 	char	*ret;
 	char	*ptr;
 
-	ret = malloc(sizeof(char *) * ft_strlen(s1) + 1);
+	ret = malloc(sizeof(*ret) * ft_strlen(s1) + 1);
 	if (ret == NULL || !s1)
 		return (NULL);
 	ptr = ret;
