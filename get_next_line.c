@@ -50,7 +50,7 @@ int	get_next_line(int fd, char **line)
 	char			buf[BUFFER_SIZE + 1];
 	size_t			bytes;
 
-	if (!line || fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, 0) < 0)
+	if (!line || fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, 0))
 		return (-1);
 	if (check_tail(line, &tail[fd]))
 		return (1);
