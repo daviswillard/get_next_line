@@ -1,8 +1,8 @@
 #include "get_next_line.h"
 
-//#define BUFFER_SIZE 1
+#define BUFFER_SIZE 10000
 
-static int buffer_works(char **line, char **tail, char *buf)
+static int	buffer_works(char **line, char **tail, char *buf)
 {
 	char	*temp;
 
@@ -21,6 +21,7 @@ static int buffer_works(char **line, char **tail, char *buf)
 static int	check_tail(char **line, char **tail)
 {
 	char		*tempest;
+	char		*temp;
 
 	if (*tail)
 	{
@@ -29,8 +30,9 @@ static int	check_tail(char **line, char **tail)
 		{
 			*tempest++ = '\0';
 			*line = ft_strdup(*tail);
-			free(*tail);
+			temp = *tail;
 			*tail = ft_strdup(tempest);
+			free(temp);
 			return (1);
 		}
 		*line = ft_strdup(*tail);
@@ -43,21 +45,21 @@ static int	check_tail(char **line, char **tail)
 
 int	get_next_line(int fd, char **line)
 {
-	static char 	*tail[1024];
-	char 			buf[BUFFER_SIZE + 1];
-	size_t 			bytes;
+	static char		*tail[1024];
+	char			buf[BUFFER_SIZE + 1];
+	size_t			bytes;
 
-	if (!line || fd < 0 || read(fd, buf, 0) < 0 || BUFFER_SIZE <= 0)
+	if (!line || fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, 0) < 0)
 		return (-1);
 	if (check_tail(line, &tail[fd]))
 		return (1);
 	bytes = read(fd, buf, BUFFER_SIZE);
 	while (bytes > 0)
 	{
-		buf[BUFFER_SIZE] = '\0';
+		buf[bytes] = '\0';
 		if (ft_strchr(buf, '\n') != NULL)
 			return (buffer_works(line, &tail[fd], buf));
-		(void)buffer_works(line, NULL, buf);
+		(void) buffer_works(line, NULL, buf);
 		bytes = read(fd, buf, BUFFER_SIZE);
 	}
 	if (bytes < 0)

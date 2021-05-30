@@ -14,6 +14,6 @@ char	*ft_strdup(const char *s1);
 
 int		ft_strlen(char const *s);
 
-char	*ft_strcpy(char *dst, const char *src);
+void	ft_bzero(void *s, size_t n);
 
 #endif

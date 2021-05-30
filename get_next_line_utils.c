@@ -1,5 +1,19 @@
 #include "get_next_line.h"
 
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	k;
+	char	*ret;
+
+	ret = s;
+	k = 0;
+	while (k < n)
+	{
+		ret[k] = (char)0;
+		k++;
+	}
+}
+
 int	ft_strlen(char const *s)
 {
 	int	counter;
@@ -13,7 +27,7 @@ int	ft_strlen(char const *s)
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char 	*dup_ret;
+	char	*dup_ret;
 	char	*ret;
 
 	ret = malloc(sizeof(ret) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
