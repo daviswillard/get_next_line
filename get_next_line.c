@@ -1,8 +1,5 @@
 #include "get_next_line.h"
 
-
-//#define BUFFER_SIZE 10000
-
 static int	buffer_works(char **line, char **tail, char *buf)
 {
 	char	*temp;
@@ -16,6 +13,7 @@ static int	buffer_works(char **line, char **tail, char *buf)
 	temp = *line;
 	*line = ft_strjoin(*line, buf);
 	free(temp);
+
 	return (1);
 }
 
@@ -38,6 +36,7 @@ static int	check_tail(char **line, char **tail)
 		}
 		*line = ft_strdup(*tail);
 		free(*tail);
+		*tail = NULL;
 	}
 	else
 		*line = ft_strdup("");
