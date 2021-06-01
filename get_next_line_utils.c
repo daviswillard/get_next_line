@@ -1,19 +1,5 @@
 #include "get_next_line.h"
 
-void	ft_bzero(void *s, size_t n)
-{
-	size_t	k;
-	char	*ret;
-
-	ret = s;
-	k = 0;
-	while (k < n)
-	{
-		ret[k] = (char)0;
-		k++;
-	}
-}
-
 int	ft_strlen(char const *s)
 {
 	int	counter;

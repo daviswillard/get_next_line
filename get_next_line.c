@@ -1,5 +1,18 @@
 #include "get_next_line.h"
 
+static int	condition_zero(char **line, int fd, char **buf)
+{
+	if (!line || fd < 0 || BUFFER_SIZE <= 0)
+		return (-1);
+	*buf = malloc(sizeof(char *) * (BUFFER_SIZE + 1));
+	if (!*buf || read(fd, buf, 0))
+	{
+		free(*buf);
+		return (-1);
+	}
+	return (0);
+}
+
 static int	buffer_works(char **line, char **tail, char *buf)
 {
 	char	*temp;
@@ -13,11 +26,12 @@ static int	buffer_works(char **line, char **tail, char *buf)
 	temp = *line;
 	*line = ft_strjoin(*line, buf);
 	free(temp);
-
+	if (tail)
+		free(buf);
 	return (1);
 }
 
-static int	check_tail(char **line, char **tail)
+static int	check_tail(char **line, char **tail, char **buf)
 {
 	char		*tempest;
 	char		*temp;
@@ -32,6 +46,7 @@ static int	check_tail(char **line, char **tail)
 			temp = *tail;
 			*tail = ft_strdup(tempest);
 			free(temp);
+			free(*buf);
 			return (1);
 		}
 		*line = ft_strdup(*tail);
@@ -46,12 +61,12 @@ static int	check_tail(char **line, char **tail)
 int	get_next_line(int fd, char **line)
 {
 	static char		*tail[1024];
-	char			buf[BUFFER_SIZE + 1];
+	char			*buf;
 	size_t			bytes;
 
-	if (!line || fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, 0))
+	if (condition_zero(line, fd, &buf))
 		return (-1);
-	if (check_tail(line, &tail[fd]))
+	if (check_tail(line, &tail[fd], &buf))
 		return (1);
 	bytes = read(fd, buf, BUFFER_SIZE);
 	while (bytes > 0)
@@ -62,6 +77,7 @@ int	get_next_line(int fd, char **line)
 		(void) buffer_works(line, NULL, buf);
 		bytes = read(fd, buf, BUFFER_SIZE);
 	}
+	free(buf);
 	if (bytes < 0)
 		return (-1);
 	return (0);
